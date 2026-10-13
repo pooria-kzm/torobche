@@ -1,4 +1,4 @@
-# CarNab — car search and comparison
+# Torobche — car search and comparison
 
 A Django marketplace-style search engine that keeps independent listings from Bama, Karnameh, Hamrah Mechanic, Khodro45, Divar and Sheypoor (it intentionally does **not** merge suspected duplicates), ranks Persian/English keyword queries, filters listings, and links buyers to the original seller page.
 
