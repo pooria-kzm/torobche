@@ -1,0 +1,9 @@
+Django>=5.0,<6.0
+requests>=2.31
+beautifulsoup4>=4.12
+playwright>=1.50
+openai>=1.0
+celery>=5.4,<6.0
+redis>=5.0
+gunicorn>=23.0,<24.0
+python-dotenv>=1.0,<2.0

@@ -1,0 +1,21 @@
+{% load static %}
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>تربچه | مقایسه خودرو</title><link rel="icon" type="image/svg+xml" href="{% static 'cars/favicon.svg' %}"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap"><link rel="stylesheet" href="{% static 'cars/style.css' %}?v=2"></head><body>
+<header><a class="logo" href="/"><img src="{% static 'cars/favicon.svg' %}" alt="">تربچه</a><div class="headline">مقایسه‌گر خودرو از بازارهای مختلف</div><div class="updated">● فهرست به‌روز</div></header>
+<main>
+  <section class="hero"><div><p class="eyebrow">مقایسه، ساده‌تر از همیشه</p><h1>خودروی بعدی‌تان را<br>هوشمندانه پیدا کنید</h1><p class="sub">تربچه، آگهی‌های یک مدل و تیپ مشابه را از بازارهای مختلف کنار هم می‌چینه</p></div><form class="searchbox" method="get" action="{% url 'search' %}"><span>⌕</span><input name="q" value="{{ q }}" placeholder="مدل خودرو را وارد کنید..."><button type="submit">جستجو</button></form></section>
+  <div class="layout">
+    <aside><div class="filter-head"><b>فیلترها</b><a href="/">پاک کردن</a></div><form method="get"><input type="hidden" name="q" value="{{ q }}"><label>برندهای پرتکرار <small class="hint">انتخاب چند مورد ممکن است</small></label><div class="brand-list"><label><input type="checkbox" name="brand" value="" {% if not filters.brand %}checked{% endif %}> همه برندها</label>{% for brand, total in brand_options %}<label><input type="checkbox" name="brand" value="{{ brand }}" {% if brand in filters.brand %}checked{% endif %}> {{ brand }} <small>{{ total }}</small></label>{% endfor %}</div><label>گیربکس</label><select name="transmission"><option value="">همه گیربکس‌ها</option><option value="اتوماتیک" {% if filters.transmission == 'اتوماتیک' %}selected{% endif %}>اتوماتیک</option><option value="دنده‌ای" {% if filters.transmission == 'دنده‌ای' %}selected{% endif %}>دنده‌ای</option></select><button type="submit" class="apply">اعمال فیلترها</button></form></aside>
+    <section class="results"><div class="result-head"><div><h2>{% if q %}کارت‌های مشابه «{{ q }}»{% else %}خودروهای قابل مقایسه{% endif %}</h2><small>{{ count }} کارت مقایسه</small></div><span>کارت را باز کنید تا آگهی‌ها را ببینید</span></div><div class="grid">{% for card in cards %}<article class="card"><div class="photo">{% if card.image_url %}<img src="{{ card.image_url }}" alt="{{ card.title }}">{% else %}<span>{{ card.title|slice:':1' }}</span>{% endif %}<em>{{ card.cars.count }} آگهی</em></div><div class="cardbody"><h3>{{ card.title }}</h3><p>سال‌ها، کارکردها و قیمت‌های مختلف</p><p class="muted">مقایسه بین بازارهای خودرو</p><a href="{% url 'card_listings' card.pk %}">مشاهده و مقایسه آگهی‌ها ←</a></div></article>{% empty %}<div class="empty">کارت متناسبی پیدا نشد. عبارت یا فیلترها را تغییر دهید.</div>{% endfor %}</div>{% if page.paginator.num_pages > 1 %}<nav class="pagination" aria-label="صفحه‌ها">{% if page.has_previous %}<a href="?{{ pagination_params }}&page={{ page.previous_page_number }}">قبلی</a>{% endif %}<span>صفحه {{ page.number }} از {{ page.paginator.num_pages }}</span>{% if page.has_next %}<a href="?{{ pagination_params }}&page={{ page.next_page_number }}">بعدی</a>{% endif %}</nav>{% endif %}</section>
+  </div>
+</main><footer>تربچه یک موتور مقایسه است؛ فروش و پرداخت در وب‌سایت اصلی آگهی انجام می‌شود.</footer><script>
+  document.querySelector('.searchbox')?.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const input = this.querySelector('input[name="q"]');
+    const url = new URL(this.action, window.location.href);
+    const query = input.value.trim();
+    if (query) url.searchParams.set('q', query);
+    else url.searchParams.delete('q');
+    window.location.assign(url.toString());
+  });
+</script></body></html>

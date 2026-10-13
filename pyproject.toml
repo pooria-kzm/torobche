@@ -1,0 +1,8 @@
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+extend-exclude = ["carfinder/cars/migrations", "carfinder/staticfiles"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "BLE", "RUF", "TRY"]
+ignore = ["E501", "RUF001", "TRY003", "TRY301"]

@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.py[cod]
+carfinder/db.sqlite3
+.env
+.env.*
+!.env.example
+
+# Local linting environments
+.lint-venv/
